@@ -1,0 +1,21 @@
+uvicorn blog_post_service:app --host 0.0.0.0 --port 8001
+uvicorn comments_service:app --host 0.0.0.0 --port 8002
+uvicorn stats_service:app --host 0.0.0.0 --port 8003
+uvicorn users_service:app --host 0.0.0.0 --port 8004
+
+
+
+                                  Blog-Post
+                                 /          \
+                                /            \
+Post stats : total likes and dislikes         Blog-post-comments
+
+Active users
+
+Number of services
+
+Blog-Post
+Post stats : total likes and dislikes
+Blog-post-comments
+Active users
+
