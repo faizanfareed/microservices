@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  blog-post-service:
+    image: blog_post_service:1.0.0
+    container_name: post
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+    network_mode: "host"
+    ports:
+      - "8001:8001"
+    environment:
+      POST_STATS_SERVICE_URL: "http://0.0.0.0:8003/post-stats"
+      POST_COMMENTS_SERVICE_URL: "http://0.0.0.0:8002/post-comments"
+    depends_on:
+      - post-stats-service
+      - comments-service
+
+  comments-service:
+    image: comment_service:1.0.0
+    container_name: comment
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8002"]
+    network_mode: "host"
+    ports:
+      - "8002:8002"
+
+  post-stats-service:
+    image: stat_service:1.0.0
+    container_name: stats
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8003"]
+    network_mode: "host"
+    ports:
+      - "8003:8003"
+
+  total-active-users-service:
+    image: user_service:1.0.0
+    container_name: users
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8004"]
+    network_mode: "host"
+    ports:
+      - "8004:8004"
